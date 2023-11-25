@@ -14,7 +14,7 @@ function descriptionShow(bool, state, setState) {
 }
 
 
-function showObject(state, setState) {
+function showObject(state, setState, user) {
     // console.log(state);
 
     return (
@@ -48,9 +48,8 @@ function showObject(state, setState) {
                             <h2>{state.data.name}</h2>
                             <span class="price"><em>{state.data.last_price ? "$" + state.data.last_price : ""}</em> ${state.data.price}</span>
                             <p></p>
-                            <form id="qty" action="#">
-                                <input type="qty" class="form-control" id="1" aria-describedby="quantity" placeholder="1" />
-                                <button type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
+                            <form id="qty">
+                                <button onClick={() => addCartItem(state.data.id, user)} type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
                             </form>
                             <ul>
                                 <li><span>Art ID:</span> {state.data.id}</li>
@@ -102,6 +101,13 @@ function showObject(state, setState) {
 }
 
 
+async function addCartItem(id, user) {
+    const response = await request.saveObject({ art: id },
+        "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
+    console.log(response);
+}
+
+
 
 function Art(props) {
     const params = useParams();
@@ -121,11 +127,10 @@ function Art(props) {
     // console.log(state, props.user);
 
 
-
     if (state) return (
         <React.Fragment>
 
-            {showObject(state, setState)}
+            {showObject(state, setState, props.user)}
 
             <div class="container" style={{ padding: 20 }}>
 

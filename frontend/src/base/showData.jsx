@@ -48,7 +48,8 @@ class ShowData extends Component {
 
     async getData() {
         try {
-            var data = this.props.state ? this.props.state.data : null;
+            var data = this.props.data ? this.props.data : null;
+            // console.log(data);
             if (!data) data = await getData(this.props.urlGet, this.props.id);
             return this.setState({ data });
         } catch (error) {

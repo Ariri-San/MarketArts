@@ -3,9 +3,9 @@ import http from "./httpService";
 var apiObject = null;
 
 function changeUrl(url = null, id = null) {
-    id = id ? id : "";
+    id = id ? id + "/" : "";
     const api = apiObject ? apiObject : "";
-    return url ? `${url}/${id}/` : `${api}/${id}/`;
+    return url ? `${url}/${id}` : `${api}/${id}`;
 }
 
 // export functions

@@ -1,13 +1,14 @@
 import React from "react";
-import FormDjango from "../base/formDjango";
 import ShowData from '../base/showData';
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import request from "../services/requestService";
 import { NavLink } from "react-router-dom";
 
 
 
 function showObject(item) {
+    // console.log(item);
+
     return (
         <div class="col-lg-3 col-md-6">
             <div class="item">
@@ -28,16 +29,18 @@ function showObject(item) {
 
 
 function showObjects(items) {
-    return items.map(item => showObject(item));
+    // console.log(items);
+    if (items[0]) return items.map(item => showObject(item.art));
 }
 
 
 
 function Cart(props) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // const location = useLocation();
 
-    request.setUrl("/market/customers/" + props.user.customer_id + "/carts/" + props.user.cart.id);
+    request.setUrl("/market/customers/" + props.user.customer_id + "/carts");
+    // console.log(props.user.cart, props.user.cart.items);
 
     return (
         <React.Fragment>
@@ -45,8 +48,8 @@ function Cart(props) {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <h3>Arts</h3>
-                            <span><NavLink to="/">Home</NavLink>{"> Arts"}</span>
+                            <h3>Cart</h3>
+                            <span><NavLink to="/">Home</NavLink>{"> Cart"}</span>
                         </div>
                     </div>
                 </div>
@@ -61,25 +64,12 @@ function Cart(props) {
                                 <h2>Trending Arts</h2>
                             </div>
                         </div>
-                        {/* <div class="col-lg-6">
-                            <div class="main-button">
-                                <a href="shop.html">View All</a>
-                            </div>
-                        </div> */}
 
-                        {/* <ShowData showObjects={showObjects} name="arts"></ShowData> */}
+                        <ShowData data={props.user.cart.items} showObjects={showObjects} name="arts"></ShowData>
 
                     </div>
                 </div>
             </div>
-
-            <main className="container">
-
-
-                {props.user &&
-                    <FormDjango navigate={navigate} label={"Form Arts"} toPath={0} />
-                }
-            </main>
 
         </React.Fragment>
     );

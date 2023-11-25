@@ -20,19 +20,16 @@ class App extends Component {
 
     async componentDidMount() {
         try {
-            const user = auth.getCurrentUser();
-            const result = await request.getObjects(
-                "/auth/users",
-                user.user_id
-            );
+            const jwt = auth.getCurrentUser();
+            const result = await request.getObjects("/auth/users", jwt.user_id);
             const customer = await request.getObjects("/market/customers");
             const cart = await request.getObjects(
                 "/market/customers/" + customer.data[0].id + "/carts"
             );
             this.setState({
                 user: {
+                    id: result.data.id,
                     username: result.data.username,
-                    id: user.user_id,
                     customer_id: customer.data[0].id,
                     customer_membership: customer.data[0].membership,
                     cart: cart.data[0],
