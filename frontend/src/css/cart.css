@@ -1,0 +1,16 @@
+.shopping_cart {
+    display: flex;
+    margin-right: -15px;
+    margin-left: -15px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.shopping_icon{
+    padding-top: 18px;
+    padding-left: 10px;
+    color: #dadee2;
+}
+

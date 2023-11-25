@@ -36,7 +36,7 @@ class ListArtViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericVi
 
 class CustomerViewSet(ModelViewSet):
     def get_queryset(self):
-        return models.Customer.objects.filter(user_id=self.request.user.id).all()
+        return models.Customer.objects.filter(user_id=self.request.user.id).all().select_related("user")
     
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -55,7 +55,7 @@ class CartViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewS
     
     def get_queryset(self):
         customer = models.Customer.objects.get(user_id=self.request.user.id)
-        return models.Cart.objects.filter(customer_id=customer.id).prefetch_related("items__art").all()
+        return models.Cart.objects.filter(customer_id=customer.id).all().prefetch_related("items__art")
     serializer_class = serializers.CartSerializer
 
 
@@ -66,7 +66,7 @@ class CartItemViewSet(ModelViewSet):
     def get_queryset(self):
         customer = models.Customer.objects.get(user_id=self.request.user.id)
         cart = models.Cart.objects.get(customer_id=customer.id)
-        return models.CartItem.objects.filter(cart_id=cart.id).all()
+        return models.CartItem.objects.filter(cart_id=cart.id).all().select_related("art__owner__user").select_related("art__artist__user")
     
     def get_serializer_class(self):
         if self.request.method == "POST" or self.request.method == "PUT":

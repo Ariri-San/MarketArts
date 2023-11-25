@@ -1,8 +1,12 @@
 import React from "react";
 import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
+import "../css/cart.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 const api = Package.proxy;
+
 
 function Navbar({ user }) {
     return (
@@ -12,9 +16,16 @@ function Navbar({ user }) {
                     <div className="col-12">
                         <nav className="main-nav">
                             {/* <!-- ***** Logo Start ***** --> */}
-                            <NavLink href="index.html" className="logo">
-                                <img src={`${api}/media/logo/logo.png`} alt="" style={{ "width": 158 }} />
-                            </NavLink>
+                            <div className="shopping_cart">
+                                <NavLink className="logo">
+                                    <img src={`${api}/media/logo/logo.png`} alt="" style={{ "width": 158 }} />
+                                </NavLink>
+                                {user && <NavLink className="shopping_icon">
+                                    <FontAwesomeIcon icon={faCartShopping} />{user.cart.id}
+                                </NavLink>}
+                            </div>
+
+
                             {/* <!-- ***** Logo End ***** --> */}
                             {/* <!-- ***** Menu Start ***** --> */}
 
