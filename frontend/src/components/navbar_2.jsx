@@ -20,7 +20,7 @@ function Navbar({ user }) {
                                 <NavLink className="logo">
                                     <img src={`${api}/media/logo/logo.png`} alt="" style={{ "width": 158 }} />
                                 </NavLink>
-                                {user && <NavLink className="shopping_icon">
+                                {user && <NavLink to="/cart" className="shopping_icon">
                                     <FontAwesomeIcon icon={faCartShopping} size="lg" />
                                 </NavLink>}
                             </div>

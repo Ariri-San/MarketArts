@@ -33,11 +33,11 @@ function showObjects(items) {
 
 
 
-function Arts(props) {
+function Cart(props) {
     const navigate = useNavigate();
     // const location = useLocation();
 
-    request.setUrl("/market/arts");
+    request.setUrl("/market/customers/" + props.user.customer_id + "/carts/" + props.user.cart.id);
 
     return (
         <React.Fragment>
@@ -67,7 +67,7 @@ function Arts(props) {
                             </div>
                         </div> */}
 
-                        <ShowData showObjects={showObjects} name="arts"></ShowData>
+                        {/* <ShowData showObjects={showObjects} name="arts"></ShowData> */}
 
                     </div>
                 </div>
@@ -85,4 +85,4 @@ function Arts(props) {
     );
 }
 
-export default Arts;
+export default Cart;

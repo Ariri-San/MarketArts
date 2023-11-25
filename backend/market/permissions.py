@@ -14,7 +14,7 @@ class IsAdminOrArtist(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         else:
-            if request.user.id:
+            if request.user:
                 if request.user.is_staff:
                     return True
                 

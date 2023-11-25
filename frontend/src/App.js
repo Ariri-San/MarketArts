@@ -7,13 +7,13 @@ import request from "./services/requestService";
 import auth from "./services/authService";
 import Customer from "./components/customer";
 import Customers from "./components/customers";
-// import Navbar from "./components/navbar";
 import Navbar from "./components/navbar_2";
 import Login from "./components/login";
 import Logout from "./components/logout";
 import Arts from "./components/arts";
 import Art from "./components/art";
 import Home from "./components/home";
+import Cart from "./components/cart";
 
 class App extends Component {
     state = {};
@@ -50,7 +50,11 @@ class App extends Component {
                     <Route path="/customers" element={<Customers />}></Route>
                     <Route
                         path="/customers/:id"
-                        element={<Customer user={this.state.user} />}
+                        element={
+                            this.state.user && (
+                                <Customer user={this.state.user} />
+                            )
+                        }
                     ></Route>
                     <Route
                         path="/"
@@ -63,6 +67,12 @@ class App extends Component {
                     <Route
                         path="arts/:id"
                         element={<Art user={this.state.user} />}
+                    ></Route>
+                    <Route
+                        path="cart"
+                        element={
+                            this.state.user && <Cart user={this.state.user} />
+                        }
                     ></Route>
                     <Route path="/login" element={<Login />}></Route>
                     <Route path="/logout" element={<Logout />}></Route>
