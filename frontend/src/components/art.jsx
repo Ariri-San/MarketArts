@@ -42,7 +42,7 @@ function showObject(item, item_2, state, setState) {
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="left-image">
-                                <img className="img-thumbnail" alt="Not Found" src={item.image ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} />
+                                <img className="img-thumbnail" alt="Not Found" src={item.image && item.show_art ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} />
                             </div>
                         </div>
                         <div class="col-lg-5 align-self-center">
@@ -84,7 +84,7 @@ function showObject(item, item_2, state, setState) {
                                     </div>
                                     <div class="tab-content" id="myTabContent">
                                         <div className={"tab-pane fade" + (state.show.description ? " show active" : "")} id="description" role="tabpanel" aria-labelledby="description-tab">
-                                            <p>{item.descriptions}</p>
+                                            {item.descriptions && <p>{item.descriptions}</p>}
                                             <p>Coloring book air plant shabby chic, crucifix normcore raclette cred swag artisan activated charcoal. PBR&B fanny pack pok pok gentrify truffaut kitsch helvetica jean shorts edison bulb poutine next level humblebrag la croix adaptogen. Hashtag poke literally locavore, beard marfa kogi bruh artisan succulents seitan tonx waistcoat chambray taxidermy. Same cred meggings 3 wolf moon lomo irony cray hell of bitters asymmetrical gluten-free art party raw denim chillwave tousled try-hard succulents street art.</p>
                                         </div>
                                         <div className={"tab-pane fade" + (state.show.description ? "" : " show active")} id="reviews" role="tabpanel" aria-labelledby="reviews-tab">

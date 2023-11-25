@@ -12,7 +12,7 @@ function showObject(item) {
         <div class="col-lg-3 col-md-6">
             <div class="item">
                 <div class="thumb">
-                    <NavLink to={`arts/${item.id}`}><img src={item.image ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} alt="" /></NavLink>
+                    <NavLink to={`arts/${item.id}`}><img src={item.image && item.show_art ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} alt="" /></NavLink>
                     <span class="price">{item.price && `$${item.price}`}</span>
                 </div>
                 <div class="down-content">
