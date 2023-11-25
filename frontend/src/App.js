@@ -25,10 +25,17 @@ class App extends Component {
                 "/auth/users",
                 user.user_id
             );
+            const customer = await request.getObjects("/market/customers");
+            const cart = await request.getObjects(
+                "/market/customers/" + customer.data[0].id + "/carts"
+            );
             this.setState({
                 user: {
                     username: result.data.username,
                     id: user.user_id,
+                    customer_id: customer.data[0].id,
+                    customer_membership: customer.data[0].membership,
+                    cart: cart.data[0],
                 },
             });
         } catch (error) {}
