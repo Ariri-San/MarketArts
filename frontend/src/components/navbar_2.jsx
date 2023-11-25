@@ -21,7 +21,7 @@ function Navbar({ user }) {
                                     <img src={`${api}/media/logo/logo.png`} alt="" style={{ "width": 158 }} />
                                 </NavLink>
                                 {user && <NavLink className="shopping_icon">
-                                    <FontAwesomeIcon icon={faCartShopping} />{user.cart.id}
+                                    <FontAwesomeIcon icon={faCartShopping} size="lg" />
                                 </NavLink>}
                             </div>
 
