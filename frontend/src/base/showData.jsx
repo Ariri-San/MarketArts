@@ -34,7 +34,7 @@ class ShowData extends Component {
         var item_2 = {};
         item_2 = this.setData(item, item_2);
 
-        if (this.props.showObject) return this.props.showObject(item, item_2, this.props.state, this.props.setState);
+        if (this.props.showObject) return this.props.showObject(item, item_2);
 
         return (
             <div key={item_2.id}>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 // import Joi from "joi-browser";
-import ShowData from '../base/showData';
 import FormDjango from "../base/formDjango";
 import DeleteData from '../base/deleteData';
 import { useLocation, useNavigate, useParams } from "react-router";
@@ -15,8 +14,8 @@ function descriptionShow(bool, state, setState) {
 }
 
 
-function showObject(item, item_2, state, setState) {
-    // console.log(item, item_2, state, state.show.description);
+function showObject(state, setState) {
+    // console.log(state);
 
     return (
         <>
@@ -24,13 +23,13 @@ function showObject(item, item_2, state, setState) {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <h3>{item.name}</h3>
+                            <h3>{state.data.name}</h3>
                             <span>
                                 <NavLink to="/">Home</NavLink>
                                 {"> "}
                                 <NavLink to="/arts">Arts</NavLink>
                                 {"> "}
-                                {item.name}
+                                {state.data.name}
                             </span>
                         </div>
                     </div>
@@ -42,21 +41,21 @@ function showObject(item, item_2, state, setState) {
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="left-image">
-                                <img className="img-thumbnail" alt="Not Found" src={item.image && item.show_art ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} />
+                                <img className="img-thumbnail" alt="Not Found" src={state.data.image && state.data.show_art ? state.data.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} />
                             </div>
                         </div>
                         <div class="col-lg-5 align-self-center">
-                            <h2>{item.name}</h2>
-                            <span class="price"><em>{item.last_price ? "$" + item.last_price : ""}</em> ${item.price}</span>
+                            <h2>{state.data.name}</h2>
+                            <span class="price"><em>{state.data.last_price ? "$" + state.data.last_price : ""}</em> ${state.data.price}</span>
                             <p></p>
                             <form id="qty" action="#">
                                 <input type="qty" class="form-control" id="1" aria-describedby="quantity" placeholder="1" />
                                 <button type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
                             </form>
                             <ul>
-                                <li><span>Art ID:</span> {item.id}</li>
-                                <li><span>Genre:</span> <a href="#">Action</a>, <a href="#">Team</a>, <a href="#">Single</a></li>
-                                <li><span>Multi-tags:</span> <a href="#">War</a>, <a href="#">Battle</a>, <a href="#">Royal</a></li>
+                                <li><span>Art ID:</span> {state.data.id}</li>
+                                <li><span>Owner:</span> {state.data.owner.user.username}</li>
+                                <li><span>Artist:</span> {state.data.artist.user.username}</li>
                             </ul>
                         </div>
                         <div class="col-lg-12">
@@ -84,7 +83,7 @@ function showObject(item, item_2, state, setState) {
                                     </div>
                                     <div class="tab-content" id="myTabContent">
                                         <div className={"tab-pane fade" + (state.show.description ? " show active" : "")} id="description" role="tabpanel" aria-labelledby="description-tab">
-                                            {item.descriptions && <p>{item.descriptions}</p>}
+                                            {state.data.descriptions && <p>{state.data.descriptions}</p>}
                                             <p>Coloring book air plant shabby chic, crucifix normcore raclette cred swag artisan activated charcoal. PBR&B fanny pack pok pok gentrify truffaut kitsch helvetica jean shorts edison bulb poutine next level humblebrag la croix adaptogen. Hashtag poke literally locavore, beard marfa kogi bruh artisan succulents seitan tonx waistcoat chambray taxidermy. Same cred meggings 3 wolf moon lomo irony cray hell of bitters asymmetrical gluten-free art party raw denim chillwave tousled try-hard succulents street art.</p>
                                         </div>
                                         <div className={"tab-pane fade" + (state.show.description ? "" : " show active")} id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -126,7 +125,7 @@ function Art(props) {
     if (state) return (
         <React.Fragment>
 
-            <ShowData state={state} setState={setState} showObject={showObject} id={params.id} name="arts"></ShowData>
+            {showObject(state, setState)}
 
             <div class="container" style={{ padding: 20 }}>
 
