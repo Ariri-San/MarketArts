@@ -13,7 +13,7 @@ function showObject(item) {
         <div class="col-lg-3 col-md-6">
             <div class="item">
                 <div class="thumb">
-                    <NavLink to={`${item.id}`}><img src={item.image && item.show_art ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} alt="" /></NavLink>
+                    <NavLink to={`/arts/${item.id}`}><img src={item.image && item.show_art ? item.image : "http://localhost:8000/media/Base/Nothing_2.jpg"} alt="" /></NavLink>
                     <span class="price">{item.price && `$${item.price}`}</span>
                 </div>
                 <div class="down-content">
@@ -60,8 +60,7 @@ function Cart(props) {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section-heading">
-                                <h6>Trending</h6>
-                                <h2>Trending Arts</h2>
+                                <h6>Cart Items</h6>
                             </div>
                         </div>
 

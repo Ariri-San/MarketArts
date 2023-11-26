@@ -9,11 +9,6 @@ import { NavLink } from "react-router-dom";
 
 
 
-function descriptionShow(bool, state, setState) {
-    setState({ data: state.data, show: { description: bool } });
-}
-
-
 function showObject(state, setState, user) {
     // console.log(state);
 
@@ -49,7 +44,11 @@ function showObject(state, setState, user) {
                             <span class="price"><em>{state.data.last_price ? "$" + state.data.last_price : ""}</em> ${state.data.price}</span>
                             <p></p>
                             <form id="qty">
-                                <button onClick={() => addCartItem(state.data.id, user)} type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
+                                {showAddCart(state.data.id, user) ?
+                                    <button onClick={() => addCartItem(state.data.id, user)} type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
+                                    : <button onClick={() => removeCartItem(state.data.id, user)}>Remove Item</button>
+                                }
+
                             </form>
                             <ul>
                                 <li><span>Art ID:</span> {state.data.id}</li>
@@ -101,10 +100,40 @@ function showObject(state, setState, user) {
 }
 
 
+function descriptionShow(bool, state, setState) {
+    setState({ data: state.data, show: { description: bool } });
+}
+
+
+function showAddCart(id, user) {
+    if (!user) return false;
+    for (const item of user.cart.items) {
+        if (item.art.id === id) return false;
+    }
+    return true;
+}
+
+
 async function addCartItem(id, user) {
-    const response = await request.saveObject({ art: id },
-        "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
-    console.log(response);
+    try {
+        await request.saveObject({ art: id }, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+async function removeCartItem(id, user) {
+    var item_id = null;
+    for (const item of user.cart.items) {
+        if (item.art.id === id) item_id = item.id;
+    }
+
+    try {
+        await request.deleteObject(item_id, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
