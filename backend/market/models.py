@@ -27,7 +27,7 @@ class Customer(models.Model):
 
 
 class ArtWork(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     descriptions = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='Arts/images',validators=[validate_file_size], null=True, blank=True)
     artist = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="artist")
