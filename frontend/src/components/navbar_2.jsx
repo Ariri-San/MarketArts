@@ -1,7 +1,7 @@
 import React from "react";
 import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
-import "../css/cart.css";
+import "../css/navbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 

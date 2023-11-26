@@ -5,7 +5,6 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import request from "../services/requestService";
 import getData from '../services/getData';
 import { NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
 import "../css/art.css";
 
 
@@ -104,13 +103,6 @@ function descriptionShow(bool, state, setState) {
     setState({ data: state.data, show: { description: bool } });
 }
 
-function showError(error) {
-    console.log(error);
-    for (const iterator of error.response.data) {
-        toast.error(iterator);
-    }
-}
-
 
 function showAddCart(id, user) {
     if (!user) return false;
@@ -126,7 +118,7 @@ async function addCartItem(id, user) {
         await request.saveObject({ art: id }, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
         window.location.reload();
     } catch (error) {
-        showError(error);
+        request.showError(error);
     }
 }
 
@@ -141,7 +133,7 @@ async function removeCartItem(id, user) {
         await request.deleteObject(item_id, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
         window.location.reload();
     } catch (error) {
-        showError(error);
+        request.showError(error);
     }
 }
 
@@ -150,7 +142,7 @@ async function setData(id, setState, state) {
     try {
         if (!state) setState({ data: await getData(null, id), show: { description: true } });
     } catch (error) {
-        showError(error);
+        request.showError(error);
     }
 }
 

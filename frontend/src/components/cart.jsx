@@ -3,6 +3,7 @@ import ShowData from '../base/showData';
 // import { useNavigate } from "react-router";
 import request from "../services/requestService";
 import { NavLink } from "react-router-dom";
+import "../css/cart.css";
 
 
 
@@ -31,6 +32,26 @@ function showObject(item) {
 function showObjects(items) {
     // console.log(items);
     if (items[0]) return items.map(item => showObject(item.art));
+}
+
+
+function totalPrice(items) {
+    if (!items) return false;
+
+    var total = 0;
+    for (const item of items) {
+        total += item.art.price;
+    }
+    return total;
+}
+
+
+function buyCart(user) {
+    try {
+
+    } catch (error) {
+        request.showError(error);
+    }
 }
 
 
@@ -65,6 +86,14 @@ function Cart(props) {
                         </div>
 
                         <ShowData data={props.user.cart.items} showObjects={showObjects} name="arts"></ShowData>
+
+
+                        <div class="col-lg-12 buy_cart">
+                            <div class="main-button">
+                                {totalPrice(props.user.cart.items) &&
+                                    <button onClick={() => buyCart(props.user)}>Buy Items ${totalPrice(props.user.cart.items)}</button>}
+                            </div>
+                        </div>
 
                     </div>
                 </div>

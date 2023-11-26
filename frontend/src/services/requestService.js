@@ -1,4 +1,5 @@
 import http from "./httpService";
+import { toast } from "react-toastify";
 
 var apiObject = null;
 
@@ -43,6 +44,13 @@ export function deleteObject(id, url = null, data = null) {
     });
 }
 
+export function showError(error) {
+    console.log(error);
+    for (const iterator of error.response.data) {
+        toast.error(iterator);
+    }
+}
+
 const functions = {
     setUrl,
     getUrl,
@@ -50,6 +58,7 @@ const functions = {
     getOptions,
     saveObject,
     deleteObject,
+    showError,
 };
 
 export default functions;
