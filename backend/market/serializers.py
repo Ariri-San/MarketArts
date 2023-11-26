@@ -138,22 +138,28 @@ class OrderSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         try:
-            with transaction.atomic():
-                cart = models.Cart.objects.get(customer_id=self.context['customer_id'])
-                order = models.Order.objects.create(customer_id=self.context['customer_id'])
-                cart_items = models.CartItem.objects.filter(cart_id=cart.id)
-                order_items = [
-                    models.OrderItem(
-                        order=order,
-                        art=item.art,
-                        price=item.art.price,
-                    ) for item in cart_items
-                ]
-                models.OrderItem.objects.bulk_create(order_items)
+            if models.Cart.objects.filter(customer_id=self.context['customer_id']):
+                with transaction.atomic():
+                    cart = models.Cart.objects.get(customer_id=self.context['customer_id'])
+                    order = models.Order.objects.create(customer_id=self.context['customer_id'])
+                    cart_items = models.CartItem.objects.filter(cart_id=cart.id)
+                    
+                    if (not cart_items):
+                        raise serializers.ValidationError('You dont Have Item In Your Cart')
+                    
+                    order_items = [
+                        models.OrderItem(
+                            order=order,
+                            art=item.art,
+                            price=item.art.price,
+                        ) for item in cart_items
+                    ]
+                    models.OrderItem.objects.bulk_create(order_items)
 
-                models.Cart.objects.filter(pk=cart.id).delete()
-                
-            return order
+                    cart_items.delete()
+                    
+                    return order
+            raise serializers.ValidationError('You dont Have Cart')
         except IntegrityError:
             self.fail("cannot_create_user")
     
