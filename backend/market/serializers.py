@@ -27,7 +27,6 @@ class AddCustomerSerializer(serializers.ModelSerializer):
             with transaction.atomic():
                 user = get_user_model().objects.create_user(**dict(validated_data["user"]))
                 validated_data["user"] = user
-                validated_data["membership"] = "C"
                 customer = models.Customer.objects.create(**validated_data)
                 models.ListArt.objects.create(customer=customer)
                 models.Cart.objects.create(customer=customer)
