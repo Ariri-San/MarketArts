@@ -1,0 +1,18 @@
+.add_cart button{
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #ee626b;
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0px 25px;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s;
+}
+
+.add_cart button:hover {
+    background-color: #0071f8;
+}

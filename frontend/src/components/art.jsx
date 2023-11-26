@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-// import Joi from "joi-browser";
 import FormDjango from "../base/formDjango";
 import DeleteData from '../base/deleteData';
 import { useLocation, useNavigate, useParams } from "react-router";
 import request from "../services/requestService";
 import getData from '../services/getData';
 import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import "../css/art.css";
 
 
 
@@ -43,13 +44,12 @@ function showObject(state, setState, user) {
                             <h2>{state.data.name}</h2>
                             <span class="price"><em>{state.data.last_price ? "$" + state.data.last_price : ""}</em> ${state.data.price}</span>
                             <p></p>
-                            <form id="qty">
+                            <div className="add_cart">
                                 {showAddCart(state.data.id, user) ?
                                     <button onClick={() => addCartItem(state.data.id, user)} type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
-                                    : <button onClick={() => removeCartItem(state.data.id, user)}>Remove Item</button>
+                                    : <button onClick={() => removeCartItem(state.data.id, user)} type="submit">Remove Item</button>
                                 }
-
-                            </form>
+                            </div>
                             <ul>
                                 <li><span>Art ID:</span> {state.data.id}</li>
                                 <li><span>Owner:</span> {state.data.owner.user.username}</li>
@@ -104,6 +104,13 @@ function descriptionShow(bool, state, setState) {
     setState({ data: state.data, show: { description: bool } });
 }
 
+function showError(error) {
+    console.log(error);
+    for (const iterator of error.response.data) {
+        toast.error(iterator);
+    }
+}
+
 
 function showAddCart(id, user) {
     if (!user) return false;
@@ -117,8 +124,9 @@ function showAddCart(id, user) {
 async function addCartItem(id, user) {
     try {
         await request.saveObject({ art: id }, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
+        window.location.reload();
     } catch (error) {
-        console.log(error);
+        showError(error);
     }
 }
 
@@ -131,16 +139,19 @@ async function removeCartItem(id, user) {
 
     try {
         await request.deleteObject(item_id, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
+        window.location.reload();
     } catch (error) {
-        console.log(error);
+        showError(error);
     }
 }
 
 
-async function setData(id, setState) {
+async function setData(id, setState, state) {
     try {
-        setState({ data: await getData(null, id), show: { description: true } });
-    } catch (error) { }
+        if (!state) setState({ data: await getData(null, id), show: { description: true } });
+    } catch (error) {
+        showError(error);
+    }
 }
 
 
@@ -154,7 +165,7 @@ function Art(props) {
 
     const [state, setState] = useState(0);
 
-    setData(params.id, setState);
+    setData(params.id, setState, state);
 
     // console.log(state, props.user);
 
