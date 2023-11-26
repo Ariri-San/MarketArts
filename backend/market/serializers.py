@@ -154,13 +154,13 @@ class OrderSerializer(serializers.ModelSerializer):
                         ) for item in cart_items
                     ]
                     models.OrderItem.objects.bulk_create(order_items)
-
                     cart_items.delete()
                     
                     return order
             raise serializers.ValidationError('You dont Have Cart')
-        except IntegrityError:
-            self.fail("cannot_create_user")
+        except Exception as error:
+            print(error)
+            raise serializers.ValidationError('cannot_create_user')
     
     class Meta:
         model = models.Order

@@ -32,7 +32,7 @@ class ArtWork(models.Model):
     image = models.ImageField(upload_to='Arts/images',validators=[validate_file_size], null=True, blank=True)
     artist = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="artist")
     owner = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="owner")
-    price = models.BigIntegerField(blank=True, null=True)
+    price = models.BigIntegerField(blank=True, default=0)
     show_art = models.BooleanField(default=False)
     
     def __str__(self):

@@ -46,9 +46,10 @@ function totalPrice(items) {
 }
 
 
-function buyCart(user) {
+async function buyCart(user) {
     try {
-
+        await request.saveObject(null, "/market/customers/" + user.customer_id + "/orders");
+        window.location.replace("/");
     } catch (error) {
         request.showError(error);
     }
@@ -90,7 +91,7 @@ function Cart(props) {
 
                         <div class="col-lg-12 buy_cart">
                             <div class="main-button">
-                                {totalPrice(props.user.cart.items) &&
+                                {props.user.cart.items &&
                                     <button onClick={() => buyCart(props.user)}>Buy Items ${totalPrice(props.user.cart.items)}</button>}
                             </div>
                         </div>
