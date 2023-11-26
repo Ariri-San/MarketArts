@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import Joi from "joi-browser";
 import FormDjango from "../base/formDjango";
 import DeleteData from '../base/deleteData';
@@ -136,6 +136,9 @@ async function removeCartItem(id, user) {
     }
 }
 
+async function setData(id, setState) {
+    setState({ data: await getData(null, id), show: { description: true } });
+}
 
 
 function Art(props) {
@@ -148,11 +151,8 @@ function Art(props) {
 
     const [state, setState] = useState(0);
 
-    useEffect(() => {
-        (async () => {
-            setState({ data: await getData(null, params.id), show: { description: true } });
-        })();
-    }, []);
+    setData(params.id, setState);
+
     // console.log(state, props.user);
 
 
