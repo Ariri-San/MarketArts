@@ -136,6 +136,7 @@ async function removeCartItem(id, user) {
     }
 }
 
+
 async function setData(id, setState) {
     setState({ data: await getData(null, id), show: { description: true } });
 }
