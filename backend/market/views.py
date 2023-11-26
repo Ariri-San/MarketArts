@@ -1,3 +1,4 @@
+from typing import Any
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from . import serializers, models, permissions
@@ -69,7 +70,7 @@ class CartItemViewSet(ModelViewSet):
         return models.CartItem.objects.filter(cart_id=cart.id).all().select_related("art__owner__user").select_related("art__artist__user")
     
     def get_serializer_class(self):
-        if self.request.method == "POST" or self.request.method == "PUT":
+        if self.request.method in ["POST", "DELETE"]:
             return serializers.AddCartItemSerializer
         return serializers.CartItemSerializer
     
@@ -80,7 +81,8 @@ class CartItemViewSet(ModelViewSet):
             'request': self.request,
             'format': self.format_kwarg,
             'view': self,
-            'cart_id': cart.id
+            'cart_id': cart.id,
+            'customer_id': customer.id,
         }
 
 

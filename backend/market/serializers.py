@@ -84,14 +84,24 @@ class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CartItem
         fields = "__all__"
+        extra_kwargs = {
+            "cart": {"read_only": True},
+        }
         
 
 class AddCartItemSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
-        if not models.CartItem.objects.filter(cart_id=self.context["cart_id"]).exists():
-            return models.CartItem.objects.create(cart_id=self.context["cart_id"], **validated_data)
-        raise serializers.ValidationError('This Art Has Seted.')
+        cart_items = models.CartItem.objects.filter(cart_id=self.context["cart_id"])
+        for item in cart_items:
+            if item.art.id == validated_data["art"].id:
+                raise serializers.ValidationError('You Have This Art In Your Cart.')
+            
+        art = models.ArtWork.objects.get(id=validated_data["art"].id)
+        if art.owner.id == self.context["customer_id"]:
+            raise serializers.ValidationError('You Have This Art.')
+
+        return models.CartItem.objects.create(cart_id=self.context["cart_id"], **validated_data)
     
     class Meta:
         model = models.CartItem
