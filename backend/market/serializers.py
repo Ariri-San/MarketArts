@@ -48,9 +48,10 @@ class ArtWorkSerializer(serializers.ModelSerializer):
     artist = CustomerSerializer(read_only=True)
     
     def create(self, validated_data):
-        if self.context["customer"]:
-            validated_data["owner"] = self.context["customer"]
-            validated_data["artist"] = self.context["customer"]
+        if self.context["user"]:
+            customer = models.Customer.objects.get(user_id=self.context["user"].id)
+            validated_data["owner"] = customer
+            validated_data["artist"] = customer
             return models.ArtWork.objects.create(**validated_data)
         raise serializers.ValidationError('Can Not Create Art.')
     

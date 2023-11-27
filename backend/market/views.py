@@ -12,26 +12,19 @@ class ArtWorkViewSet(ModelViewSet):
     permission_classes = [permissions.IsAdminOrArtist]
     
     def get_serializer_context(self):
-        if self.request.method == "POST":
-            customer = models.Customer.objects.get(user_id=self.request.user.id)
-        else:
-            customer = None
         return {
             'request': self.request,
-            'format': self.format_kwarg,
-            'view': self,
-            'customer': customer
+            'user': self.request.user,
         }
 
 
 
 class ListArtViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
     serializer_class = serializers.ListArtSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAdminOrCustomer]
     
     def get_queryset(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
-        return models.ListArt.objects.filter(customer=customer).all()
+        return models.ListArt.objects.filter(customer=self.kwargs["customer_pk"]).all()
 
 
 
@@ -52,21 +45,19 @@ class CustomerViewSet(ModelViewSet):
 
 
 class CartViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAdminOrCustomer]
+    serializer_class = serializers.CartSerializer
     
     def get_queryset(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
-        return models.Cart.objects.filter(customer_id=customer.id).all().prefetch_related("items__art")
-    serializer_class = serializers.CartSerializer
+        return models.Cart.objects.filter(customer_id=self.kwargs["customer_pk"]).all().prefetch_related("items__art")
 
 
 
 class CartItemViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAdminOrCustomer]
     
     def get_queryset(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
-        cart = models.Cart.objects.get(customer_id=customer.id)
+        cart = models.Cart.objects.get(customer_id=self.kwargs["customer_pk"])
         return models.CartItem.objects.filter(cart_id=cart.id).all().select_related("art__owner__user").select_related("art__artist__user")
     
     def get_serializer_class(self):
@@ -75,33 +66,30 @@ class CartItemViewSet(ModelViewSet):
         return serializers.CartItemSerializer
     
     def get_serializer_context(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
-        cart = models.Cart.objects.get(customer_id=customer.id)
+        cart = models.Cart.objects.get(customer_id=self.kwargs["customer_pk"])
         return {
             'request': self.request,
             'format': self.format_kwarg,
             'view': self,
             'cart_id': cart.id,
-            'customer_id': customer.id,
+            'customer_id': self.kwargs["customer_pk"],
         }
 
 
 
 class OrderViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAdminOrCustomer]
     serializer_class = serializers.OrderSerializer
     
     def get_queryset(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
-        return models.Order.objects.filter(customer=customer).prefetch_related("items__art").all()
+        return models.Order.objects.filter(customer=self.kwargs["customer_pk"]).prefetch_related("items__art").all()
     
     def get_serializer_context(self):
-        customer = models.Customer.objects.get(user_id=self.request.user.id)
         return {
             'request': self.request,
             'format': self.format_kwarg,
             'view': self,
-            'customer_id': customer.id
+            'customer_id': self.kwargs["customer_pk"],
         }
 
 

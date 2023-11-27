@@ -27,3 +27,14 @@ class IsAdminOrArtist(permissions.BasePermission):
                     if art.owner.user.id == request.user.id:
                         return True
         return False
+
+
+class IsAdminOrCustomer(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.id:
+            if request.user.is_staff:
+                return True
+            customer = Customer.objects.get(user_id=request.user.id)
+            if customer.id == int(view.kwargs["customer_pk"]):
+                return True
+        return False
