@@ -1,18 +1,18 @@
 import http from "./httpService";
 import { toast } from "react-toastify";
+import config from "../config.json";
 
-var apiObject = null;
+var apiObject = config.BaseUrl;
 
 function changeUrl(url = null, id = null) {
     id = id ? id + "/" : "";
-    const api = apiObject ? apiObject : "";
-    return url ? `${url}/${id}` : `${api}/${id}`;
+    return url ? `${config.BaseUrl + url}/${id}` : `${apiObject}/${id}`;
 }
 
 // export functions
 
 export function setUrl(url) {
-    apiObject = url;
+    apiObject = config.BaseUrl + url;
     return apiObject;
 }
 

@@ -43,12 +43,12 @@ function showObject(state, setState, user) {
                             <h2>{state.data.name}</h2>
                             <span class="price"><em>{state.data.last_price ? "$" + state.data.last_price : ""}</em> ${state.data.price}</span>
                             <p></p>
-                            <div className="add_cart">
+                            {user && <div className="add_cart">
                                 {showAddCart(state.data.id, user) ?
                                     <button onClick={() => addCartItem(state.data.id, user)} type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
                                     : <button onClick={() => removeCartItem(state.data.id, user)} type="submit">Remove Item</button>
                                 }
-                            </div>
+                            </div>}
                             <ul>
                                 <li><span>Art ID:</span> {state.data.id}</li>
                                 <li><span>Owner:</span> {state.data.owner.user.username}</li>
