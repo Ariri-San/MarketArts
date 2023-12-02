@@ -20,11 +20,11 @@ def _get_displayed_page_numbers(number_show, current, final):
 
     # If the break would only exclude a single page number then we
     # may as well include the page number instead of the break.
-    if current <= (number_show*2 + 2):
-        for i in range(number_show + 2, number_show*2 + 2):
+    if current <= (number_show*2):
+        for i in range(number_show, number_show*2):
             included.add(i)
-    if current >= final - (number_show*2 + 1):
-        for i in range(number_show + 1, number_show*2 + 1):
+    if current >= final - (number_show*2 -1):
+        for i in range(number_show -1, number_show*2 -1):
             included.add(final - i)
 
     # Now sort the page numbers and drop anything outside the limits.
@@ -44,7 +44,7 @@ def _get_displayed_page_numbers(number_show, current, final):
 
 class DefaultPagination(PageNumberPagination):
     number_show_page = 2
-    page_size = 5
+    page_size = 1
     
     
     def get_html_context(self):

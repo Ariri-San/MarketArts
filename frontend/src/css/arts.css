@@ -3,6 +3,12 @@
     justify-content: center;
 }
 
+.search form {
+    position: relative;
+    margin: 10px;
+    width: 480px;
+}
+
 .search form input {
     position: absolute;
     z-index: 1;
@@ -20,23 +26,27 @@
 }
 
 .search form select {
-    position: absolute;
+    position: relative;
+    float: right;
     z-index: 2;
-    width: 30%;
+    width: 136px;
     height: 50px;
     outline: none;
     border-radius: 25px;
     background-color: #fff;
     border: none;
     padding: 0px 25px;
-    font-size: 14px;
+    /* font-size: 14px; */
     color: #7a7a7a;
-    right: 149px;
+}
+
+.search form select option:hover {
+    background-color: #00f829;
 }
 
 .search form button {
-    z-index: 3;
-    display: inline-block;
+    z-index: 2;
+    float: right;
     height: 50px;
     line-height: 50px;
     background-color: #ee626b;
@@ -47,9 +57,8 @@
     padding: 0px 25px;
     border: none;
     border-radius: 25px;
-    position: absolute;
-    right: -5px;
-    top: 0;
+    position: relative;
+    right: -2px;
     transition: all 0.3s;
 }
 
@@ -57,8 +66,33 @@
     background-color: #0071f8;
 }
 
-.search form {
-    position: relative;
-    margin: 10px;
-    width: 450px;
+.pagination li {
+    display: inline-block;
+    margin: 0px 5px;
+}
+
+.pagination li a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #eee;
+    color: #1e1e1e;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.pagination {
+    display: flex;
+    border-radius: 0.25rem;
+    justify-content: center;
+}
+
+.pagination li a:hover,
+.pagination li a.is_active {
+    background-color: #0071f8;
+    color: #fff;
 }
