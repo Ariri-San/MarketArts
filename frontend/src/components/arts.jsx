@@ -70,12 +70,12 @@ function Arts(props) {
                                         onkeypress="handle"
                                     />
                                     <select defaultValue={state.ordering} id="ordering" name="ordering">
-                                        <option>name</option>
-                                        <option>-name</option>
-                                        <option>id</option>
-                                        <option>-id</option>
+                                        <option value="name">A to Z</option>
+                                        <option value="-name">Z to A</option>
+                                        <option value="id">Id</option>
+                                        <option value="-id">-Id</option>
                                     </select>
-                                    <button role="button">Search Now</button>
+                                    <button>Search Now</button>
                                 </form>
                             </div>
                         </div>
