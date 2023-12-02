@@ -96,3 +96,10 @@
     background-color: #0071f8;
     color: #fff;
 }
+
+.pagination li a.disable {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    /* color: black; */
+}

@@ -13,15 +13,23 @@ function pagination(links) {
         <div class="row">
             <div class="col-lg-12">
                 <ul class="pagination">
-                    <li><a href={links.previous_url ? links.previous_url.replace("http://localhost:8000/market", "") : ""}> &lt; </a></li>
+                    <li><a
+                        className={links.previous_url ? "" : "disable"}
+                        href={links.previous_url ? links.previous_url.replace("http://localhost:8000/market", "") : ""}
+                    > &lt; </a></li>
+
                     {links.page_links.map(item =>
                         <li><a
-                            className={item[2] ? "is_active" : ""}
+                            className={(item[2] ? "is_active" : "") + (item[0] ? "" : " disable")}
                             href={item[0] ? item[0].replace("http://localhost:8000/market", "") : ""}>
                             {item[1] ? item[1] : "..."}
                         </a></li>
                     )}
-                    <li><a href={links.next_url ? links.next_url.replace("http://localhost:8000/market", "") : ""}> &gt; </a></li>
+
+                    <li><a
+                        className={links.next_url ? "" : "disable"}
+                        href={links.next_url ? links.next_url.replace("http://localhost:8000/market", "") : ""}
+                    > &gt; </a></li>
                 </ul>
             </div>
         </div >
