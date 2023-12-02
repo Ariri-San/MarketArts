@@ -8,28 +8,37 @@ import { NavLink } from "react-router-dom";
 import "../css/arts.css";
 
 
-function pagination(links) {
+function changeState(state, setState) {
+    setState({ ...state, change: false });
+}
+
+
+function pagination(state, setState) {
+    const links = state.data.links;
     return (
         <div class="row">
             <div class="col-lg-12">
                 <ul class="pagination">
-                    <li><a
+                    <li><NavLink
                         className={links.previous_url ? "" : "disable"}
-                        href={links.previous_url ? links.previous_url.replace("http://localhost:8000/market", "") : ""}
-                    > &lt; </a></li>
+                        to={links.previous_url ? links.previous_url.replace("http://localhost:8000/market", "") : ""}
+                        onClick={() => changeState(state, setState)}
+                    > &lt; </NavLink></li>
 
                     {links.page_links.map(item =>
-                        <li><a
+                        <li><NavLink
                             className={(item[2] ? "is_active" : "") + (item[0] ? "" : " disable")}
-                            href={item[0] ? item[0].replace("http://localhost:8000/market", "") : ""}>
+                            to={item[0] ? item[0].replace("http://localhost:8000/market", "") : ""}
+                            onClick={() => changeState(state, setState)}>
                             {item[1] ? item[1] : "..."}
-                        </a></li>
+                        </NavLink></li>
                     )}
 
-                    <li><a
+                    <li><NavLink
                         className={links.next_url ? "" : "disable"}
-                        href={links.next_url ? links.next_url.replace("http://localhost:8000/market", "") : ""}
-                    > &gt; </a></li>
+                        to={links.next_url ? links.next_url.replace("http://localhost:8000/market", "") : ""}
+                        onClick={() => changeState(state, setState)}
+                    > &gt; </NavLink></li>
                 </ul>
             </div>
         </div >
@@ -63,11 +72,10 @@ function showObjects(items) {
 
 async function setData(setState, state) {
     try {
-        if (!state.data) {
-            setState({ data: await getData(), ...state });
-        }
+        setState({ ...state, data: await getData(), change: true });
     } catch (error) {
         request.showError(error);
+        setState({ ...state, change: true });
     }
 }
 
@@ -75,6 +83,7 @@ async function setData(setState, state) {
 function Arts(props) {
     const navigate = useNavigate();
     const location = useLocation();
+
 
     request.setUrl("market/arts/" + (location.search ? location.search : ""));
 
@@ -91,10 +100,10 @@ function Arts(props) {
         page: state_field["page"],
     });
 
-    setData(setState, state);
+    if (!state.change) setData(setState, state);
     // console.log(state);
 
-    return (
+    if (state.change) return (
         <React.Fragment>
             <div className="page-heading header-text" style={{ paddingBottom: 60, paddingTop: 100 }}>
                 <div className="container">
@@ -149,7 +158,7 @@ function Arts(props) {
                 </div>
             </div>
 
-            {state.data && pagination(state.data.links)}
+            {state.data && pagination(state, setState)}
 
             <main className="container">
 
