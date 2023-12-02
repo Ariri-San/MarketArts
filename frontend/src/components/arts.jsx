@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormDjango from "../base/formDjango";
 import ShowData from '../base/showData';
 import { useNavigate, useLocation } from "react-router";
@@ -37,7 +37,16 @@ function Arts(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // const [state, setState] = useState({ search: location.search });
+
+    const fields = location.search.replace("?", "").split("&");
+    const state_field = {};
+    for (const field of fields) {
+        var index = field.search("=");
+        state_field[field.slice(0, index)] = field.slice(index + 1);
+    }
+    // console.log(state_field);
+    const [state, setState] = useState({ search: state_field["search"], ordering: state_field["ordering"] });
+
 
     request.setUrl("/market/arts/" + location.search);
 
@@ -51,15 +60,21 @@ function Arts(props) {
 
                             <span><NavLink to="/">Home</NavLink>{"> Arts"}</span>
                             <div class="search">
-                                <form id="search" action="">
+                                <form id="search">
                                     <input
                                         type="text"
-                                        defaultValue={location.search.replace("?search=", "")}
+                                        defaultValue={state.search}
                                         placeholder="Type Something"
                                         id="search"
                                         name="search"
                                         onkeypress="handle"
                                     />
+                                    <select defaultValue={state.ordering} id="ordering" name="ordering">
+                                        <option>name</option>
+                                        <option>-name</option>
+                                        <option>id</option>
+                                        <option>-id</option>
+                                    </select>
                                     <button role="button">Search Now</button>
                                 </form>
                             </div>

@@ -4,7 +4,9 @@
 }
 
 .search form input {
-    max-width: 450px;
+    position: absolute;
+    z-index: 1;
+    /* max-width: 450px; */
     width: 100%;
     height: 50px;
     outline: none;
@@ -14,9 +16,26 @@
     padding: 0px 25px;
     font-size: 14px;
     color: #7a7a7a;
+    right: 0;
+}
+
+.search form select {
+    position: absolute;
+    z-index: 2;
+    width: 30%;
+    height: 50px;
+    outline: none;
+    border-radius: 25px;
+    background-color: #fff;
+    border: none;
+    padding: 0px 25px;
+    font-size: 14px;
+    color: #7a7a7a;
+    right: 149px;
 }
 
 .search form button {
+    z-index: 3;
     display: inline-block;
     height: 50px;
     line-height: 50px;
@@ -41,5 +60,5 @@
 .search form {
     position: relative;
     margin: 10px;
-    width: 420px;
+    width: 450px;
 }
