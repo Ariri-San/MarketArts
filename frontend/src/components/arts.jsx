@@ -1,10 +1,10 @@
 import React from "react";
 import FormDjango from "../base/formDjango";
 import ShowData from '../base/showData';
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import request from "../services/requestService";
 import { NavLink } from "react-router-dom";
-
+import "../css/arts.css";
 
 
 function showObject(item) {
@@ -35,9 +35,11 @@ function showObjects(items) {
 
 function Arts(props) {
     const navigate = useNavigate();
-    // const location = useLocation();
+    const location = useLocation();
 
-    request.setUrl("/market/arts");
+    // const [state, setState] = useState({ search: location.search });
+
+    request.setUrl("/market/arts/" + location.search);
 
     return (
         <React.Fragment>
@@ -46,7 +48,21 @@ function Arts(props) {
                     <div className="row">
                         <div className="col-lg-12">
                             <h3>Arts</h3>
+
                             <span><NavLink to="/">Home</NavLink>{"> Arts"}</span>
+                            <div class="search">
+                                <form id="search" action="">
+                                    <input
+                                        type="text"
+                                        defaultValue={location.search.replace("?search=", "")}
+                                        placeholder="Type Something"
+                                        id="search"
+                                        name="search"
+                                        onkeypress="handle"
+                                    />
+                                    <button role="button">Search Now</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
