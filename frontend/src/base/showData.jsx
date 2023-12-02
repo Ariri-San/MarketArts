@@ -1,12 +1,12 @@
 import { toast } from "react-toastify";
-import request from "../services/requestService";
+// import request from "../services/requestService";
 import React, { Component } from "react";
 import getData from '../services/getData';
 
 
 class ShowData extends Component {
     state = {
-        data: [],
+        data: null,
     }
 
     async componentDidMount() {

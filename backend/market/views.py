@@ -1,7 +1,9 @@
-from typing import Any
+from django.core.mail import send_mail
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from . import serializers, models, permissions
+from rest_framework.filters import SearchFilter, OrderingFilter
+from . import serializers, models, permissions, paginations
 
 # Create your views here.
 
@@ -10,6 +12,15 @@ class ArtWorkViewSet(ModelViewSet):
     queryset = models.ArtWork.objects.all().select_related("artist__user").select_related("owner__user")
     serializer_class = serializers.ArtWorkSerializer
     permission_classes = [permissions.IsAdminOrArtist]
+    pagination_class = paginations.DefaultPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ['name', 'descriptions']
+    ordering_fields = ['name', 'id']
+    ordering = ['id']
+    
+    # def list(self, request, *args, **kwargs):
+    #     send_mail(subject="subject", message="message", from_email='aririsan81@gmail.com', recipient_list=["omidabcd123@gmail.com"])
+    #     return super().list(request, *args, **kwargs)
     
     def get_serializer_context(self):
         return {

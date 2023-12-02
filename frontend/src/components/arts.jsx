@@ -28,7 +28,7 @@ function showObject(item) {
 
 
 function showObjects(items) {
-    return items.map(item => showObject(item));
+    return items.results.map(item => showObject(item));
 }
 
 
