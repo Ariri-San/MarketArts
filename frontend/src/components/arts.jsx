@@ -76,7 +76,7 @@ function Arts(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    request.setUrl("/market/arts/" + location.search);
+    request.setUrl("/market/arts" + (location.search ? "/" + location.search : ""));
 
     const fields = location.search.replace("?", "").split("&");
     const state_field = {};
@@ -92,8 +92,6 @@ function Arts(props) {
     });
 
     setData(setState, state);
-
-    console.log(state);
 
     return (
         <React.Fragment>

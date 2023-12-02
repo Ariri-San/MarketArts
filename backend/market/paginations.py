@@ -44,7 +44,7 @@ def _get_displayed_page_numbers(number_show, current, final):
 
 class DefaultPagination(PageNumberPagination):
     number_show_page = 2
-    page_size = 1
+    page_size = 5
     
     
     def get_html_context(self):
