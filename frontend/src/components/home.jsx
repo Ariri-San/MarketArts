@@ -37,7 +37,7 @@ function Home(props) {
     // const navigate = useNavigate();
     // const location = useLocation();
 
-    request.setUrl("/market/arts");
+    request.setUrl("market/arts/");
 
     return (
         <React.Fragment>

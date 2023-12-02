@@ -19,7 +19,7 @@ function Customers(props) {
     const navigate = useNavigate();
     // const location = useLocation();
 
-    request.setUrl("/market/customers");
+    request.setUrl("market/customers/");
 
     return (
         <React.Fragment>

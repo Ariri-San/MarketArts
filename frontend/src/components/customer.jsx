@@ -13,7 +13,7 @@ function Customer(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    request.setUrl("/auth/users");
+    request.setUrl("auth/users/");
 
     return (
 

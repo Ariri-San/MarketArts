@@ -5,8 +5,8 @@ import config from "../config.json";
 var apiObject = config.BaseUrl;
 
 function changeUrl(url = null, id = null) {
-    id = id ? "/" + id : "";
-    return url ? `${config.BaseUrl}${url}${id}/` : `${apiObject}${id}/`;
+    id = id ? id + "/" : "";
+    return url ? `${config.BaseUrl}${url}${id}` : `${apiObject}${id}`;
 }
 
 // export functions

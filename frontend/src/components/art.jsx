@@ -115,7 +115,7 @@ function showAddCart(id, user) {
 
 async function addCartItem(id, user) {
     try {
-        await request.saveObject({ art: id }, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items");
+        await request.saveObject({ art: id }, "market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
         window.location.reload();
     } catch (error) {
         request.showError(error);
@@ -130,7 +130,7 @@ async function removeCartItem(id, user) {
     }
 
     try {
-        await request.deleteObject(item_id, "/market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
+        await request.deleteObject(item_id, "market/customers/" + user.customer_id + "/carts/" + user.cart.id + "/items/");
         window.location.reload();
     } catch (error) {
         request.showError(error);
@@ -152,7 +152,7 @@ function Art(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    request.setUrl("/market/arts");
+    request.setUrl("market/arts/");
 
 
     const [state, setState] = useState(0);

@@ -21,10 +21,10 @@ class App extends Component {
     async componentDidMount() {
         try {
             const jwt = auth.getCurrentUser();
-            const result = await request.getObjects("/auth/users", jwt.user_id);
-            const customer = await request.getObjects("/market/customers");
+            const result = await request.getObjects("auth/users/", jwt.user_id);
+            const customer = await request.getObjects("market/customers/");
             const cart = await request.getObjects(
-                "/market/customers/" + customer.data[0].id + "/carts"
+                "market/customers/" + customer.data[0].id + "/carts/"
             );
             this.setState({
                 user: {

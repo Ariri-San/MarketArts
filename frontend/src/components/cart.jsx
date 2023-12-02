@@ -48,7 +48,7 @@ function totalPrice(items) {
 
 async function buyCart(user) {
     try {
-        await request.saveObject(null, "/market/customers/" + user.customer_id + "/orders");
+        await request.saveObject(null, "market/customers/" + user.customer_id + "/orders/");
         window.location.replace("/");
     } catch (error) {
         request.showError(error);
@@ -61,7 +61,7 @@ function Cart(props) {
     // const navigate = useNavigate();
     // const location = useLocation();
 
-    request.setUrl("/market/customers/" + props.user.customer_id + "/carts");
+    request.setUrl("market/customers/" + props.user.customer_id + "/carts/");
     // console.log(props.user.cart, props.user.cart.items);
 
     return (
