@@ -8,10 +8,6 @@ import { NavLink } from "react-router-dom";
 import "../css/arts.css";
 
 
-function changeState(state, setState) {
-    setState({ ...state, change: false });
-}
-
 
 function pagination(state, setState) {
     const links = state.data.links;
@@ -70,6 +66,33 @@ function showObjects(items) {
 }
 
 
+function changeState(state, setState) {
+    setState({ ...state, change: false });
+}
+
+
+function customSubmit(event, state, setState, location, navigate) {
+    event.preventDefault();
+
+    const listFilter = ["search", "ordering", "page"];
+    var first = true;
+    location.search = "";
+
+    for (const filter of listFilter) {
+        if (state[filter]) {
+            if (first) {
+                location.search += `?${filter}=` + state[filter];
+                first = false;
+            }
+            else location.search += `&${filter}=` + state[filter];
+        }
+    }
+
+    navigate(location.search);
+    changeState(state, setState);
+}
+
+
 async function setData(setState, state) {
     try {
         setState({ ...state, data: await getData(), change: true });
@@ -80,30 +103,19 @@ async function setData(setState, state) {
 }
 
 
+
 function Arts(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [state, setState] = useState({});
 
     request.setUrl("market/arts/" + (location.search ? location.search : ""));
-
-    const fields = location.search.replace("?", "").split("&");
-    const state_field = {};
-    for (const field of fields) {
-        var index = field.search("=");
-        state_field[field.slice(0, index)] = field.slice(index + 1);
-    }
-    // console.log(state_field);
-    const [state, setState] = useState({
-        search: state_field["search"],
-        ordering: state_field["ordering"],
-        page: state_field["page"],
-    });
 
     if (!state.change) setData(setState, state);
     // console.log(state);
 
-    if (state.change) return (
+    else return (
         <React.Fragment>
             <div className="page-heading header-text" style={{ paddingBottom: 60, paddingTop: 100 }}>
                 <div className="container">
@@ -113,10 +125,11 @@ function Arts(props) {
 
                             <span><NavLink to="/">Home</NavLink>{"> Arts"}</span>
                             <div class="search">
-                                <form id="search">
+                                <form id="search" onSubmit={event => customSubmit(event, state, setState, location, navigate)}>
                                     <input
                                         type="text"
                                         defaultValue={state.search}
+                                        onChange={event => setState({ ...state, search: event.target.value })}
                                         placeholder="Type Something"
                                         id="search"
                                         name="search"
@@ -124,10 +137,14 @@ function Arts(props) {
                                     />
 
                                     <button>Search Now</button>
-                                    <select defaultValue={state.ordering} id="ordering" name="ordering">
+                                    <select
+                                        defaultValue={state.ordering}
+                                        id="ordering" name="ordering"
+                                        onChange={event => setState({ ...state, ordering: event.target.value })}
+                                    >
                                         <option value="name">A to Z</option>
                                         <option value="-name">Z to A</option>
-                                        <option value="id">Id</option>
+                                        <option value="">Id</option>
                                         <option value="-id">-Id</option>
                                     </select>
                                 </form>
