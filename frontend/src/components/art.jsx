@@ -164,7 +164,6 @@ function Art(props) {
 
     if (state) return (
         <React.Fragment>
-
             {showObject(state, setState, props.user)}
 
             <div class="container" style={{ padding: 20 }}>

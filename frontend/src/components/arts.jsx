@@ -160,7 +160,7 @@ function Arts(props) {
                         <div class="col-lg-12">
                             <div class="section-heading">
                                 <h6>Trending</h6>
-                                <h2>Trending Arts</h2>
+                                <h2>Trending Arts - {state.data.count}</h2>
                             </div>
                         </div>
                         {/* <div class="col-lg-6">
