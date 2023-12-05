@@ -142,10 +142,10 @@ function Arts(props) {
                                         id="ordering" name="ordering"
                                         onChange={event => setState({ ...state, ordering: event.target.value })}
                                     >
-                                        <option value="name">A to Z</option>
-                                        <option value="-name">Z to A</option>
                                         <option value="">Id</option>
                                         <option value="-id">-Id</option>
+                                        <option value="name">A to Z</option>
+                                        <option value="-name">Z to A</option>
                                     </select>
                                 </form>
                             </div>
