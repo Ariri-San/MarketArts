@@ -1,9 +1,11 @@
 from django.core.mail import send_mail
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet, mixins, GenericViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.filters import SearchFilter, OrderingFilter
 from . import serializers, models, permissions, paginations
+from .tasks import notify_customers
 
 # Create your views here.
 
@@ -18,9 +20,11 @@ class ArtWorkViewSet(ModelViewSet):
     ordering_fields = ['name', 'id']
     ordering = ['id']
     
-    # def list(self, request, *args, **kwargs):
-    #     send_mail(subject="subject", message="message", from_email='aririsan81@gmail.com', recipient_list=["omidabcd123@gmail.com"])
-    #     return super().list(request, *args, **kwargs)
+    def list(self, request, *args, **kwargs):
+        notify_customers.delay("Hello world")
+        # send_mail(subject="subject", message="message", from_email='aririsan81@gmail.com', recipient_list=["omidabcd123@gmail.com"])
+        return super().list(self, request, *args, **kwargs)
+
     
     def get_serializer_context(self):
         return {

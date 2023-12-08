@@ -181,3 +181,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_PORT = 25
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_BEAT_SCHEDULE = {
+    'notify_customers': {
+        'task': 'market.tasks.notify_customers',
+        'schedule': 5,
+        'args': ["Hello World"],
+    },
+}
