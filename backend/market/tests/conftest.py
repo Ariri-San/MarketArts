@@ -1,6 +1,12 @@
-import pytest
 import uuid
+import pytest
+from rest_framework.test import APIClient
 from market.models import Customer
+
+
+@pytest.fixture
+def api_client():
+   return APIClient()
 
 
 @pytest.fixture
@@ -19,10 +25,13 @@ def create_user(db, django_user_model, test_password):
 
 
 @pytest.fixture
-def change_customer_to_artist():
-    def customer_artist(**kwargs):
-        customer = Customer.objects.get(user=kwargs["user"])
+def create_attist_customer(create_user):
+    def artist_customer(**kwargs):
+        if "user" not in kwargs:
+            kwargs["user"] = create_user()
+        customer = Customer.objects.get(**kwargs)
         customer.membership = 'A'
         customer.save()
-    return customer_artist
+        return kwargs['user']
+    return artist_customer
         
