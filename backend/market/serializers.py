@@ -26,10 +26,7 @@ class AddCustomerSerializer(serializers.ModelSerializer):
         try:
             with transaction.atomic():
                 user = get_user_model().objects.create_user(**dict(validated_data["user"]))
-                validated_data["user"] = user
-                customer = models.Customer.objects.create(**validated_data)
-                models.ListArt.objects.create(customer=customer)
-                models.Cart.objects.create(customer=customer)
+                customer = models.Customer.objects.get(user=user)
             return customer
         except IntegrityError:
             self.fail("cannot_create_user")

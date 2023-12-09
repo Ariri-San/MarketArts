@@ -1,13 +1,14 @@
 import { jwtDecode } from "jwt-decode";
 import http from "./httpService";
+import config from "../config.json";
 
-const apiEndpoint = "/auth/jwt";
+const apiEndpoint = config.BaseUrl + "auth/jwt/";
 const access = "access";
 const refresh = "refresh";
 
 export async function login(username, password) {
     logout();
-    const { data: jwt } = await http.post(apiEndpoint + "/create", {
+    const { data: jwt } = await http.post(apiEndpoint + "create/", {
         username,
         password,
     });
@@ -18,7 +19,7 @@ export async function login(username, password) {
 export async function setRefreshToken() {
     try {
         const token = localStorage.getItem(refresh);
-        const { data: jwt } = await http.post(apiEndpoint + "/refresh", {
+        const { data: jwt } = await http.post(apiEndpoint + "refresh/", {
             refresh: token,
         });
 

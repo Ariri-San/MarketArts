@@ -48,8 +48,8 @@ class CustomerViewSet(ModelViewSet):
         return models.Customer.objects.filter(user_id=self.request.user.id).all().select_related("user")
     
     def get_serializer_class(self):
-        # if self.request.method == "POST":
-        #     return serializers.AddCustomerSerializer
+        if self.request.method == "POST":
+            return serializers.AddCustomerSerializer
         return serializers.CustomerSerializer
     
     def get_permissions(self):
