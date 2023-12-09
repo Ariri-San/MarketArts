@@ -6,4 +6,4 @@ class MarketConfig(AppConfig):
     name = 'market'
     
     def ready(self) -> None:
-        import market.signals
+        import market.signals.handlers
