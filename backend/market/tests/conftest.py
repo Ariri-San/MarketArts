@@ -32,6 +32,6 @@ def create_attist_customer(create_user):
         customer = Customer.objects.get(**kwargs)
         customer.membership = 'A'
         customer.save()
-        return kwargs['user']
+        return {"customer": customer, "user": kwargs["user"]}
     return artist_customer
         

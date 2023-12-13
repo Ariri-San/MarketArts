@@ -21,7 +21,7 @@ class ArtWorkViewSet(ModelViewSet):
     ordering = ['id']
     
     def list(self, request, *args, **kwargs):
-        notify_customers.delay("Hello world")
+        # notify_customers.delay("Hello world")
         # send_mail(subject="subject", message="message", from_email='aririsan81@gmail.com', recipient_list=["omidabcd123@gmail.com"])
         return super().list(self, request, *args, **kwargs)
 
