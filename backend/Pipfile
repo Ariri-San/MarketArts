@@ -22,12 +22,9 @@ flower = "*"
 django-redis = "*"
 whitenoise = "*"
 gunicorn = "*"
-psycopg2-binary = "*"
 dj-database-url = "*"
 django-environ = "*"
-django-silk = "*"
 eventlet = "*"
-googlemaps = "*"
 
 [dev-packages]
 autopep8 = "*"
