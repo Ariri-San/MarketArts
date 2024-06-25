@@ -11,7 +11,7 @@ RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
 # We use the --system flag so packages are installed into the system python
 # and not into a virtualenv. Docker containers don't need virtual environments. 
-RUN pipenv install --system --dev
+RUN pipenv install --system
 
 # Copy the application files into the image
 COPY . .
