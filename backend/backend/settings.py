@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w_kj&-0i3!wwx@2c5_+fv75m1f80^t&399hlyhn#h^%u$!v1-1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['marketarts-backend.onrender.com']
 
 
 # Application definition
