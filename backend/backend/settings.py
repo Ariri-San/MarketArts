@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-w_kj&-0i3!wwx@2c5_+fv75m1f80^t&399hlyhn#h^%u$!v1-1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['marketarts-backend.onrender.com']
+ALLOWED_HOSTS = ['market-arts-backend.liara.run']
 
-CSRF_TRUSTED_ORIGINS = ["https://marketarts-backend.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://market-arts-backend.liara.run"]
 
 
 # Application definition
@@ -148,7 +148,8 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'https://marketarts-frontend.onrender.com',
+    'https://market-arts.liara.run',
+    'https://shayan-projects.ir',
     'http://localhost:3000'
 ]
 
