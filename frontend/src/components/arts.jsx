@@ -13,8 +13,6 @@ const base_url = config.BaseUrl
 
 function pagination(state, setState) {
     const links = state.data.links;
-    console.log(base_url.replace("https", "http"))
-    console.log(links.previous_url.replace(base_url.replace("https", "http") + "market", ""))
 
     return (
         <div class="row">
