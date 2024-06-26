@@ -149,7 +149,7 @@ INTERNAL_IPS = [
 
 CORS_ORIGIN_WHITELIST = [
     'https://market-arts.liara.run',
-    'https://shayan-projects.ir',
+    'http://shayan-projects.ir',
     'http://localhost:3000'
 ]
 
