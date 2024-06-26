@@ -4,12 +4,14 @@ FROM node:20.11.1-alpine3.19
 
 WORKDIR /app
 COPY package*.json ./
-# RUN npm install --save-dev
-RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
+RUN npm install --save -dev
 COPY . .
 
-ENV PORT=3000
 
-EXPOSE 3000
+# Build for production.
+RUN npm run build
 
-CMD ["npm", "start"]
+# Install `serve` to run the application.
+RUN npm install -g serve
+
+CMD ["serve", "-s", "build"]
