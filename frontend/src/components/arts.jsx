@@ -8,6 +8,8 @@ import { NavLink } from "react-router-dom";
 import config from "../config.json";
 import "../css/arts.css";
 
+const base_url = config.BaseUrl.replace("http", "https")
+
 
 function pagination(state, setState) {
     const links = state.data.links;
@@ -17,14 +19,14 @@ function pagination(state, setState) {
                 <ul class="pagination">
                     <li><NavLink
                         className={links.previous_url ? "" : "disable"}
-                        to={links.previous_url ? links.previous_url.replace(config.BaseUrl + "market", "") : ""}
+                        to={links.previous_url ? links.previous_url.replace(base_url + "market", "") : ""}
                         onClick={() => changeState(state, setState)}
                     > &lt; </NavLink></li>
 
                     {links.page_links.map(item =>
                         <li><NavLink
                             className={(item[2] ? "is_active" : "") + (item[0] ? "" : " disable")}
-                            to={item[0] ? item[0].replace(config.BaseUrl + "market", "") : ""}
+                            to={item[0] ? item[0].replace(base_url + "market", "") : ""}
                             onClick={() => changeState(state, setState)}>
                             {item[1] ? item[1] : "..."}
                         </NavLink></li>
@@ -32,7 +34,7 @@ function pagination(state, setState) {
 
                     <li><NavLink
                         className={links.next_url ? "" : "disable"}
-                        to={links.next_url ? links.next_url.replace(config.BaseUrl + "market", "") : ""}
+                        to={links.next_url ? links.next_url.replace(base_url + "market", "") : ""}
                         onClick={() => changeState(state, setState)}
                     > &gt; </NavLink></li>
                 </ul>

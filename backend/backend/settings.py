@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w_kj&-0i3!wwx@2c5_+fv75m1f80^t&399hlyhn#h^%u$!v1-1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['market-arts-backend.liara.run']
+ALLOWED_HOSTS = ['market-arts-backend.liara.run', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ["https://market-arts-backend.liara.run"]
 
