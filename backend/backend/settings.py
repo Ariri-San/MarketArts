@@ -146,6 +146,7 @@ INTERNAL_IPS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    'https://marketarts-frontend.onrender.com',
     'http://localhost:3000'
 ]
 
