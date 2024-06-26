@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['marketarts-backend.onrender.com']
 
+CSRF_TRUSTED_ORIGINS = ["https://marketarts-backend.onrender.com"]
+
 
 # Application definition
 
