@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
 import "../css/navbar.css";
@@ -7,10 +7,31 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 const api = Package.proxy;
 
+function change_menu(state, setState){
+    if (state.show_menu == true){
+        setState({show_menu: false, scroll_up: state.scroll_up})
+    }
+    else{
+        setState({show_menu: true, scroll_up: state.scroll_up})
+    }
+}
+
+function listen_scroll(state, setState){
+    if (window.scrollY > 300){
+        setState({scroll_up: false, show_menu: state.show_menu});
+    }
+    else {
+        setState({scroll_up: true, show_menu: state.show_menu});
+    }
+}
 
 function Navbar({ user }) {
+    const [state, setState] = useState({scroll_up: true, show_menu: false});
+
+    window.addEventListener("scroll", () => listen_scroll(state, setState));
+
     return (
-        <header className="header-area header-sticky background-header">
+        <header className={"header-area header-sticky" + (state.scroll_up ? "" : " background-header")}>
             <div className="container">
                 <div className="row">
                     <div className="col-12">
@@ -29,7 +50,7 @@ function Navbar({ user }) {
                             {/* <!-- ***** Logo End ***** --> */}
                             {/* <!-- ***** Menu Start ***** --> */}
 
-                            <ul className="nav">
+                            <ul className="nav" style={{"display" : state.show_menu ? "block" : null}}>
                                 <li><NavLink to="/">Home</NavLink></li>
                                 <li><NavLink to="/arts">Arts</NavLink></li>
                                 {!user &&
@@ -45,7 +66,7 @@ function Navbar({ user }) {
                                     </React.Fragment>
                                 }
                             </ul>
-                            <a className='menu-trigger'>
+                            <a className={'menu-trigger' + (state.show_menu ? " active" : "")} onClick={() => change_menu(state, setState)}>
                                 <span>Menu</span>
                             </a>
 

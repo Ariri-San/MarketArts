@@ -1679,7 +1679,8 @@ body {
     .cta::after,
     .most-played .main-button,
     .related-games .main-button {
-        display: none;
+        /* display: none; */
+        margin-bottom: 30px;
     }
     .most-played .section-heading {
         text-align: center;
