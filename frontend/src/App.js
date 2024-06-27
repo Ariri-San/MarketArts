@@ -7,7 +7,8 @@ import request from "./services/requestService";
 import auth from "./services/authService";
 import Customer from "./components/customer";
 import Customers from "./components/customers";
-import Navbar from "./components/navbar_2";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 import Login from "./components/login";
 import Logout from "./components/logout";
 import Arts from "./components/arts";
@@ -74,6 +75,7 @@ class App extends Component {
                     <Route path="/login" element={<Login />}></Route>
                     <Route path="/logout" element={<Logout />}></Route>
                 </Routes>
+                <Footer/>
             </React.Fragment>
         );
     }

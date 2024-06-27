@@ -1,66 +1,81 @@
-import React from "react";
+import React, {useState} from "react";
+import Package from "../../package.json";
 import { NavLink } from "react-router-dom";
+import "../css/navbar.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
-const Navbar = ({ user }) => {
+const api = Package.proxy;
+
+
+function change_menu(state, setState){
+    if (state.show_menu == true){
+        setState({show_menu: false, scroll_up: state.scroll_up})
+    }
+    else{
+        setState({show_menu: true, scroll_up: state.scroll_up})
+    }
+}
+
+function listen_scroll(state, setState){
+    if (window.scrollY > 300){
+        setState({scroll_up: false, show_menu: state.show_menu});
+    }
+    else {
+        setState({scroll_up: true, show_menu: state.show_menu});
+    }
+}
+
+function Navbar({ user }) {
+    const [state, setState] = useState({scroll_up: true, show_menu: false});
+
+    window.addEventListener("scroll", () => listen_scroll(state, setState));
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-                <NavLink className="navbar-brand" to="/">
-                    Navbar{" "}
-                    {/* <span className="badge badge-pill badge-secondary">
-                        {props.totalCounters}
-                    </span> */}
-                </NavLink>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" to="/">Arts</NavLink>
-                        </li>
-                        {!user &&
-                            <React.Fragment>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/login">Login</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/customers">Register</NavLink>
-                                </li>
-                            </React.Fragment>
-                        }
-                        {user &&
-                            <React.Fragment>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to={`/customers/${user.id}`}>{user.username}</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/logout">Logout</NavLink>
-                                </li>
-                            </React.Fragment>
-                        }
-                        {/* <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+        <header className={"header-area header-sticky" + (state.scroll_up ? "" : " background-header")}>
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <nav className="main-nav">
+                            {/* <!-- ***** Logo Start ***** --> */}
+                            <div className="shopping_cart">
+                                <NavLink className="logo">
+                                    <img src={`${api}/media/logo/logo.png`} alt="" style={{ "width": 158 }} />
+                                </NavLink>
+                                {user && <NavLink to="/cart" className="shopping_icon">
+                                    <FontAwesomeIcon icon={faCartShopping} size="lg" />
+                                </NavLink>}
+                            </div>
+
+
+                            {/* <!-- ***** Logo End ***** --> */}
+                            {/* <!-- ***** Menu Start ***** --> */}
+
+                            <ul className="nav" style={{"display" : state.show_menu ? "block" : null}}>
+                                <li><NavLink to="/">Home</NavLink></li>
+                                <li><NavLink to="/arts">Arts</NavLink></li>
+                                {!user &&
+                                    <React.Fragment>
+                                        <li><NavLink to="/customers">Register</NavLink></li>
+                                        <li><NavLink to="/login">Login</NavLink></li>
+                                    </React.Fragment>
+                                }
+                                {user &&
+                                    <React.Fragment>
+                                        <li><NavLink to={`/customers/${user.id}`}>{user.username}</NavLink></li>
+                                        <li><NavLink to="/logout">Logout</NavLink></li>
+                                    </React.Fragment>
+                                }
                             </ul>
-                        </li> */}
-                        {/* <li className="nav-item">
-                            <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li> */}
-                    </ul>
-                    <form className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                            <a className={'menu-trigger' + (state.show_menu ? " active" : "")} onClick={() => change_menu(state, setState)}>
+                                <span>Menu</span>
+                            </a>
+
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </header>
     );
 }
 
